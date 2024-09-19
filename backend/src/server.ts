@@ -3,10 +3,12 @@ import "dotenv/config";
 import { Router } from "express";
 import { Database } from "./config/database";
 import transactionRoutes from './modules/transactions/infra/http/routes/transactions.routes'
+import cors from 'cors';
 
 const app = express();
 const route = Router();
 
+app.use(cors());
 app.use(route);
 
 const database = new Database();
