@@ -15,7 +15,7 @@ export class CreateTransactionAndUserService {
 
     const processLine = async (line: string) => {
       const [id, nome, cpfCnpj, data, valor] = line.split(';').map((item) => {
-        const [key, value] = item.split(':');
+        const [_, value] = item.split(':');
         return value;
       });
       
@@ -28,7 +28,7 @@ export class CreateTransactionAndUserService {
       const transactionAlreadyExists = await transactionRepository.findByTransactionId(id);
 
       if (transactionAlreadyExists) {
-        console.log(`Transaction ${id} already exists!`);
+        console.log(`Transaction ${id} already exists in the database.`);
         return;
       }
       

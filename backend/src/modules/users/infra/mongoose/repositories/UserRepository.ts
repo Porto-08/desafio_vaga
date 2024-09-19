@@ -14,5 +14,7 @@ export class UserRepository implements IUserRepository {
     const createdUser = await User.create(user);
 
     await createdUser.save();
+
+    return createdUser;
   }
 }

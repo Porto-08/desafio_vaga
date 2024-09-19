@@ -5,7 +5,7 @@ const TransactionSchema = new mongoose.Schema({
   transaction_id: String,
   user_id: String,
   amount: Number,
-  created_at: Date,
+  transaction_date: Date,
 });
 
 export const Transaction = mongoose.model<ITransaction & mongoose.Document>("transactions", TransactionSchema);

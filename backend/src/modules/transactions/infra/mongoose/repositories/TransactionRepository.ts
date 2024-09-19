@@ -1,5 +1,6 @@
 import { ICreateTransaction } from "../../../domain/models/ICreateTransaction";
 import { ITransactionRepository } from "../../../domain/repositories/ITransactionRepository";
+import { IResponseTransactions } from "../../../types";
 import { Transaction } from "../entities/Transaction";
 
 export class TransactionRepository implements ITransactionRepository {
@@ -11,10 +12,22 @@ export class TransactionRepository implements ITransactionRepository {
     return transaction;
   }
 
-  async findTransactionPaginated() {
-    const transactions = await Transaction.find();
+  async findTransactionPaginated(page: number, limit: number): Promise<any> {
+    const skip = (page - 1) * limit;
 
-    return transactions;
+    const transactions = await Transaction.find()
+    .skip(skip)
+    .limit(limit)
+    .sort({ transaction_date: 'desc' });
+
+    const totalTransactions = await Transaction.countDocuments();
+    const totalPages = Math.ceil(totalTransactions / limit);
+
+    return {
+      data: transactions,
+      currentPage: page,
+      totalPages,
+    } as IResponseTransactions;
   }
 
   async save(transaction: ICreateTransaction) {

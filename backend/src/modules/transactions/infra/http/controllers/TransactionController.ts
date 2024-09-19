@@ -1,17 +1,21 @@
 import { Request, Response } from "express";
 import { CreateTransactionAndUserService } from "../../../services/CreateTransactionAndUserService";
 import moment from "moment";
+import { GetTransactionsService } from "../../../services/GetTransactionService";
 
 export class TransactionController {
-  
-  // private transactionRepository: ITransactionRepository;
-
-  // constructor() {
-  //   this.transactionRepository = ''
-  // }
-
   async index(request: Request, response: Response) {
-    return response.json({ message: 'Hello World' });
+    const getTransactionsService = new GetTransactionsService();
+
+    const { page = 1 } = request.query;
+
+    const transactions = await getTransactionsService.execute(Number(page));
+
+    if (!transactions) {
+      return response.status(404).json({ message: 'Transactions not found' });
+    }
+
+    return response.json(transactions);
   }
 
   async store(request: Request, response: Response) {

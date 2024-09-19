@@ -3,5 +3,5 @@ export interface ITransaction {
   transaction_id: string;
   user_id: string;
   amount: number;
-  created_at: Date;
+  transaction_date: Date;
 } 

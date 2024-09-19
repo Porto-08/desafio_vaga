@@ -3,5 +3,5 @@ import { IUser } from '../models/IUser';
 
 export interface IUserRepository {
   findByDocument(document: string): Promise<IUser | undefined>;
-  save(user: ICreateUser): Promise<void>;
+  save(user: ICreateUser): Promise<IUser>;
 }
