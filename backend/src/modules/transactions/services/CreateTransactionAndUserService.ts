@@ -44,7 +44,7 @@ export class CreateTransactionAndUserService {
       await transactionRepository.save({
         transaction_id: id,
         amount: Number(valor),
-        user_id: user.id,
+        users: user.id,
         transaction_date: moment(data).toDate(),
       });
     };
